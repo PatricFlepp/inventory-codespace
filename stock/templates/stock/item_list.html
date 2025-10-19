@@ -1,0 +1,34 @@
+{% extends "stock/base.html" %}
+{% block title %}Items{% endblock %}
+{% block content %}
+  <div class="toolbar">
+    <form method="get">
+      <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search name, SKU, location…">
+      <select name="active">
+        <option value="">All</option>
+        <option value="1" {% if request.GET.active == "1" %}selected{% endif %}>Active</option>
+        <option value="0" {% if request.GET.active == "0" %}selected{% endif %}>Inactive</option>
+      </select>
+      <button class="btn" type="submit">Filter</button>
+    </form>
+  </div>
+  <table>
+    <thead><tr><th>Name</th><th>SKU</th><th>Qty</th><th>Location</th><th>Unit Price</th><th>Active</th><th></th></tr></thead>
+    <tbody>
+      {% for i in items %}
+        <tr>
+          <td>{{ i.name }}</td><td>{{ i.sku }}</td><td>{{ i.quantity }}</td>
+          <td>{{ i.location }}</td><td>{{ i.unit_price }}</td><td>{{ i.is_active|yesno:"Yes,No" }}</td>
+          <td><a href="{% url 'item-edit' i.pk %}">Edit</a> · <a href="{% url 'item-delete' i.pk %}">Delete</a></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="7">No items yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if is_paginated %}
+    <p>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
+    {% if page_obj.has_previous %}<a class="btn" href="?page={{ page_obj.previous_page_number }}">Prev</a>{% endif %}
+    {% if page_obj.has_next %}<a class="btn" href="?page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+  {% endif %}
+{% endblock %}

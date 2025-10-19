@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Inventory{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin:2rem; }
+    table { width:100%; border-collapse:collapse; margin-top:1rem; }
+    th, td { border-bottom:1px solid #ddd; padding:.5rem; text-align:left; }
+    .btn { padding:.4rem .7rem; border:1px solid #999; background:#f7f7f7; text-decoration:none; }
+    header, nav { display:flex; gap:1rem; align-items:center; }
+    .toolbar { display:flex; gap:.5rem; align-items:center; margin-top:1rem; }
+    input[type=text]{ padding:.4rem; width:18rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="{% url 'item-list' %}">Inventory</a></h1>
+    <nav>
+      <a class="btn" href="{% url 'item-create' %}">+ New Item</a>
+      <a class="btn" href="/admin/">Admin</a>
+    </nav>
+  </header>
+  {% block content %}{% endblock %}
+</body>
+</html>
